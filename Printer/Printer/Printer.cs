@@ -15,7 +15,7 @@ namespace Printer
         private string _MakerName = null;          //　メーカー名.
         private string _Model = null;              //  型番.
 
-        public static Printer getInstance(string makerName, string modelNumber)
+        public static Printer GetInstance(string makerName, string modelNumber)
         {
             if (makerName == null || modelNumber == null)
             {
@@ -32,7 +32,21 @@ namespace Printer
         public string GetStatus()
         {
             //インク量, 印刷紙の枚数, 総印刷枚数とかの情報を含んで返します。
-            return string.Format("インク量 : (0) 印刷紙の枚数: (1) 総印刷枚数: (2)", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
+            return string.Format("Ink Amount: (0) Printing Paper Amount: (1) Total Printed Sheets: (2)", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
+        }
+        /// <summary>
+        /// 印刷.
+        /// </summary>
+        public bool Print()
+        {
+            if (InkAmount <= 0 && PrintingPaperAmount <= 0)
+            {
+                return false;
+            }
+            InkAmount -= 3;
+            PrintingPaperAmount -= 1;
+            TotalPrintedSheets += 1;
+            return true;
         }
 
         #region Declare properties
