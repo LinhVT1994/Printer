@@ -29,6 +29,11 @@ namespace Printer
             Model = modelNumber;
         }
 
+        public string GetStatus()
+        {
+            //インク量, 印刷紙の枚数, 総印刷枚数とかの情報を含んで返します。
+            return string.Format("インク量 : (0) 印刷紙の枚数: (1) 総印刷枚数: (2)", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
+        }
 
         #region Declare properties
         /// <summary>
