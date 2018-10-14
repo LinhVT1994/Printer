@@ -10,6 +10,7 @@ namespace Printer
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
