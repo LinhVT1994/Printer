@@ -32,7 +32,7 @@ namespace Printer
         public string GetStatus()
         {
             //インク量, 印刷紙の枚数, 総印刷枚数とかの情報を含んで返します。
-            return string.Format("Ink Amount: (0) Printing Paper Amount: (1) Total Printed Sheets: (2)", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
+            return string.Format("Ink Amount: {0} Printing Paper Amount: {1} Total Printed Sheets: {2}", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
         }
         /// <summary>
         /// 印刷.

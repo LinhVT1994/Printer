@@ -22,18 +22,27 @@ namespace Printer
             sucess = printer.Print();
             if (sucess)
             {
-                Console.WriteLine("Status of this printer before printing:");
+                Console.WriteLine("Status of this printer after printing at first:");
+                Console.WriteLine(printer.GetStatus());
             }
             else
             {
-
+                Console.WriteLine("Something false.");
             }
+
+
+            Console.WriteLine("Print the second time: ");
+
             sucess = printer.Print();
-
-            printer.Print();
-            Console.WriteLine(printer.GetStatus());
-
-            Console.WriteLine(printer.Print());
+            if (sucess)
+            {
+                Console.WriteLine("Status of this printer after printing at second:");
+                Console.WriteLine(printer.GetStatus());
+            }
+            else
+            {
+                Console.WriteLine("Something false.");
+            }
             Console.Read();
         }
     }
