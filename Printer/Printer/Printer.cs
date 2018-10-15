@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Printer
 {
+    /// <summary>
+    /// This comment is created by the company computer.
+    /// </summary>
     class Printer
     {
+
 
         private double _InkAmount = 100;　         //　インク量.
         private int _PrintingPaperAmount = 50;  //　印刷紙の枚数.
