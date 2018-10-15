@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Printer
 {
-    /// <summary>
-    /// This comment is created by the company computer.
-    /// </summary>
     class Printer
     {
 
