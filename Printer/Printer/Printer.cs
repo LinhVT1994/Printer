@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Printer
 {
+    enum Status
+    {
+        [Description("Out of paper.")]
+        OutOfPaper,
+        [Description("Out of ink.")]
+        OutOfInk,
+        [Description("Disable")]
+        Disable,
+        [Description("Available")]
+        Available
+    }
     class Printer
     {
-
-
         private double _InkAmount = 100;　         //　インク量.
-        private int _PrintingPaperAmount = 50;  //　印刷紙の枚数.
-        private int _TotalPrintedSheets = 0;　  //　総印刷枚数.
+        private int    _PrintingPaperAmount = 50;  //　印刷紙の枚数.
+        private int    _TotalPrintedSheets = 0;　     //　総印刷枚数.
         private string _MakerName = null;          //　メーカー名.
         private string _Model = null;              //  型番.
-
         public static Printer GetInstance(string makerName, string modelNumber)
         {
             if (makerName == null || modelNumber == null)
@@ -29,27 +38,58 @@ namespace Printer
             MakerName = makerName;
             Model = modelNumber;
         }
-
-        public string GetStatus()
+        /// <summary>
+        /// Get information about a printer.
+        /// </summary>
+        /// <returns></returns>
+        public string GetInfo()
         {
             //インク量, 印刷紙の枚数, 総印刷枚数とかの情報を含んで返します。
             return string.Format("Ink Amount: {0} Printing Paper Amount: {1} Total Printed Sheets: {2}", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
         }
+        public override string ToString()
+        {
+            return string.Format("Ink Amount: {0} Printing Paper Amount: {1} Total Printed Sheets: {2}", InkAmount, PrintingPaperAmount, TotalPrintedSheets);
+        }
+
+        /// <summary>
+        /// Status of a printer.
+        /// </summary>
+        public Status PrinterStatus  // Status of printer.
+        {   
+            get;
+            private set;
+        } = Status.Available;
         /// <summary>
         /// 印刷.
         /// </summary>
         public bool Print()
         {
-            if (InkAmount <= 0 && PrintingPaperAmount <= 0)
+            if (PrinterStatus != Status.Available) // check status of printer before printing.
             {
                 return false;
             }
             InkAmount -= 3;
             PrintingPaperAmount -= 1;
             TotalPrintedSheets += 1;
+            SetPrinterStatus(); // update status for printer after printed.
             return true;
         }
-
+        /// <summary>
+        /// Set the status for printer.
+        /// </summary>
+        private Status SetPrinterStatus()
+        {
+            if (InkAmount - 3 < 0)
+            {
+                PrinterStatus = Status.OutOfInk;
+            }
+            if (PrintingPaperAmount <= 0)
+            {
+                PrinterStatus = Status.OutOfPaper;
+            }
+            return PrinterStatus;
+        }
         #region Declare properties
         /// <summary>
         /// インク量.
