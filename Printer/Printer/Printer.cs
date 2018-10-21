@@ -76,11 +76,29 @@ namespace Printer
             return true;
         }
         /// <summary>
+        /// Print many papers.
+        /// </summary>
+        /// <param name="amounts">Amounts of papers needs to print.</param>
+        /// <returns></returns>
+        public bool Prints(int amounts)
+        {
+            bool status = false;
+            for (int i = 0; i < amounts; i++)
+            {
+                status = Print();
+                if (!status)
+                {
+                    return status;
+                }
+            }
+            return status;
+        }
+        /// <summary>
         /// Set the status for printer.
         /// </summary>
         private Status SetPrinterStatus()
         {
-            if (InkAmount - 3 < 0)
+            if (InkAmount - 3 <= 0)
             {
                 PrinterStatus = Status.OutOfInk;
             }

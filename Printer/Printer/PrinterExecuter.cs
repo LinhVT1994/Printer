@@ -13,61 +13,91 @@ namespace Printer
             string makerName = "Canon Ink Jet Printer PIXUS";
             string model = "iP7230";
             Printer printer = Printer.GetInstance(makerName, model);
-
             bool sucess = false;
+            //_____________________________________________________
 
-            Console.WriteLine("Status of this printer before printing:");
-            Console.WriteLine(printer.GetInfo());
-           
-
+            // Check the status of printer before printing.
+            Console.WriteLine("Print the first time:");
             if (printer.PrinterStatus == Status.Available)
             {
-                Console.WriteLine("This printer is ready for printing:");
+                Console.WriteLine("1. The status is Available:");
+                Console.WriteLine("     Before printing at the first time: ");
+                Console.WriteLine("\t\t=>" + printer.GetInfo());
                 printer.Print();
-                Console.WriteLine("Status of this printer after printing at first:");
-                Console.WriteLine(printer.GetInfo());
+                Console.WriteLine("     After printing at the first time: ");
+                Console.WriteLine("\t\t=>"+printer.GetInfo());
             }
             else
             {
-                if (printer.PrinterStatus == Status.OutOfInk)
-                {
-                    Console.WriteLine("Error infor : "+" Out Of Ink");
-                }
-                else if (true)
-                {
-                    Console.WriteLine("Error infor : " + " Out Of Ink");
-                }
-
-                switch (printer.PrinterStatus)
-                {
-                    case Status.OutOfPaper:
-                        Console.WriteLine("Error infor : " + " Out Of Paper");
-                        break;
-                    case Status.OutOfInk:
-                        Console.WriteLine("Error infor : " + " Out Of Ink");
-                        break;
-                    case Status.Disable:
-                        Console.WriteLine("Error infor : " + " Disable");
-                        break;
-                    default:
-                        break;
-                }
-
+                DisplayStatusOfPrinter(printer);
             }
 
-            Console.WriteLine("Print the second time: ");
 
-            sucess = printer.Print();
-            if (sucess)
+            // Check the status of printer before printing.
+            Console.WriteLine("Print the second time:");
+            if (printer.PrinterStatus == Status.Available)
             {
-                Console.WriteLine("Status of this printer after printing at second:");
-                Console.WriteLine(printer.GetInfo());
+                Console.WriteLine("2. The status is Available:");
+                Console.WriteLine("     Before printing at the second time: ");
+                Console.WriteLine("\t\t=>" + printer.GetInfo());
+                printer.Print();
+                Console.WriteLine("     After printing at the second time: ");
+                Console.WriteLine("\t\t=>" + printer.GetInfo());
             }
             else
             {
-                Console.WriteLine("Something false.");
+                DisplayStatusOfPrinter(printer);
             }
+            //_____________________________________________________
+
+            Console.WriteLine("_________________________________________________________________________________________");
+
+            Console.WriteLine("Print 50 papers:");
+            if (printer.PrinterStatus == Status.Available)
+            {
+                Console.WriteLine("3. The status is Available:");
+                Console.WriteLine("     Execute printing 50 papers: ");
+                Console.WriteLine("\t\t=>" + printer.GetInfo());
+                if (printer.Prints(50))
+                {
+                    Console.WriteLine("     After printing 50 papers: ");
+                    Console.WriteLine("\t\t=>" + printer.GetInfo());
+                }
+                else
+                {
+                    DisplayStatusOfPrinter(printer);
+                    Console.WriteLine("\t\t=>" + printer.GetInfo());
+                    Console.WriteLine("\t\t=>"+(50-printer.TotalPrintedSheets) +" papers left have not printed yet");
+                }
+               
+            }
+            else
+            {
+                DisplayStatusOfPrinter(printer);
+            }
+
             Console.Read();
+        }
+        /// <summary>
+        /// Display the status of printer.
+        /// </summary>
+        /// <param name="printer"></param>
+        public static void DisplayStatusOfPrinter(Printer printer)
+        {
+            switch (printer.PrinterStatus)
+            {
+                case Status.OutOfPaper:
+                    Console.WriteLine("Error infor : " + " Out Of Paper");
+                    break;
+                case Status.OutOfInk:
+                    Console.WriteLine("Error infor : " + " Out Of Ink");
+                    break;
+                case Status.Disable:
+                    Console.WriteLine("Error infor : " + " Disable");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
